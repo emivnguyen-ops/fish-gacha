@@ -26,7 +26,6 @@
       <div class="wave wave1"></div>
       <div class="wave wave2"></div>
       <div class="wave wave3"></div>
-      <!-- Animated bubbles -->
       <div class="bubbles">
         <span></span><span></span><span></span><span></span><span></span>
         <span></span><span></span><span></span><span></span><span></span>
@@ -38,6 +37,29 @@
     </div>
   </section>
 
+  <!-- ===== FISHING MINIGAME OVERLAY ===== -->
+  <div id="minigame-overlay" class="hidden">
+    <div id="mg-container">
+      <div id="mg-header">
+        <span id="mg-fish-emoji"></span>
+        <span id="mg-fish-name"></span>
+        <span id="mg-rarity-badge"></span>
+      </div>
+      <div id="mg-game-area">
+        <!-- Progress bar (vertical, left) -->
+        <div id="mg-progress-track">
+          <div id="mg-progress-fill"></div>
+        </div>
+        <!-- Fishing bar (vertical, right) -->
+        <div id="mg-bar">
+          <div id="mg-catch-zone"></div>
+          <div id="mg-fish-icon"></div>
+        </div>
+      </div>
+      <p id="mg-hint">Click &amp; hold to reel up! 🎣</p>
+    </div>
+  </div>
+
   <!-- ===== FISH REVEAL OVERLAY ===== -->
   <div id="reveal-overlay" class="hidden">
     <div id="reveal-card">
@@ -48,6 +70,16 @@
       <p class="reveal-desc" id="reveal-desc"></p>
       <p class="reveal-value" id="reveal-value"></p>
       <button id="reveal-dismiss" class="btn-dismiss">Nice! 🎉</button>
+    </div>
+  </div>
+
+  <!-- ===== FISH-GOT-AWAY OVERLAY ===== -->
+  <div id="gotaway-overlay" class="hidden">
+    <div id="gotaway-card">
+      <div class="gotaway-emoji">🌊</div>
+      <h3>The fish got away!</h3>
+      <p class="gotaway-desc">Better luck next time…</p>
+      <button id="gotaway-dismiss" class="btn-dismiss">Try Again</button>
     </div>
   </div>
 
@@ -67,14 +99,13 @@
     </section>
 
     <section id="leaderboard-section" class="panel">
-      <h2>🏆 Leaderboard</h2>
+      <h2>🏆 Leaderboard <button id="lb-refresh" class="btn-small">↻ Refresh</button></h2>
       <div id="leaderboard-list" class="scroll-list">
         <p class="empty-msg">Loading…</p>
       </div>
     </section>
   </div>
 
-  <!-- Load game logic as ES module -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
