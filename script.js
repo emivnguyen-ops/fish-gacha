@@ -26,7 +26,15 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+
+// Analytics can crash the whole module if not fully enabled — make it non-fatal
+let analytics;
+try {
+  analytics = getAnalytics(app);
+} catch (e) {
+  console.warn("Analytics unavailable (non-fatal):", e);
+}
+
 const db = getFirestore(app);
 
 // =============================================
@@ -193,8 +201,11 @@ async function savePlayer() {
       catchHistory: player.catchHistory,
     });
     console.log("💾 Saved to Firebase:", player.name);
+    return true;
   } catch (err) {
     console.error("Firebase save error:", err);
+    alert("⚠️ Could not save to Firebase!\n\nMake sure you've created a Firestore database in your Firebase console and set security rules to allow read/write.\n\nError: " + err.message);
+    return false;
   }
 }
 
@@ -220,7 +231,13 @@ async function loadPlayer(name) {
 
 async function fetchLeaderboard() {
   try {
-    const snap = await getDocs(collection(db, "players"));
+    // Add a timeout so the UI doesn't hang forever if Firestore isn't set up
+    const timeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error(
+        "Timed out. Make sure Firestore is enabled in your Firebase console."
+      )), 8000)
+    );
+    const snap = await Promise.race([getDocs(collection(db, "players")), timeout]);
     const players = [];
     snap.forEach((d) => players.push(d.data()));
     players.sort((a, b) => (b.totalCatches ?? 0) - (a.totalCatches ?? 0));
