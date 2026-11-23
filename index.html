@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐟 Fish Gacha</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <div class="header-left">
+      <h1>🐟 Fish Gacha</h1>
+    </div>
+    <div class="header-right">
+      <span id="player-name-display">Loading…</span>
+      <span id="coin-display" class="coin-badge">💰 100</span>
+      <button id="switch-btn" class="btn-small">Switch Player</button>
+    </div>
+  </header>
+
+  <!-- ===== FISHING AREA ===== -->
+  <section id="fishing-area">
+    <div class="ocean-bg">
+      <div class="wave wave1"></div>
+      <div class="wave wave2"></div>
+      <div class="wave wave3"></div>
+      <!-- Animated bubbles -->
+      <div class="bubbles">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="cast-area">
+      <p id="cast-message">Cast your line and see what bites!</p>
+      <button id="cast-btn" class="btn-cast">🎣 Cast Line!<span class="cost"> (10 coins)</span></button>
+    </div>
+  </section>
+
+  <!-- ===== FISH REVEAL OVERLAY ===== -->
+  <div id="reveal-overlay" class="hidden">
+    <div id="reveal-card">
+      <div class="reveal-stars" id="reveal-stars"></div>
+      <div class="reveal-emoji" id="reveal-emoji"></div>
+      <h3 class="reveal-name" id="reveal-name"></h3>
+      <span class="reveal-rarity" id="reveal-rarity"></span>
+      <p class="reveal-desc" id="reveal-desc"></p>
+      <p class="reveal-value" id="reveal-value"></p>
+      <button id="reveal-dismiss" class="btn-dismiss">Nice! 🎉</button>
+    </div>
+  </div>
+
+  <!-- ===== COLLECTION ===== -->
+  <section id="collection-section" class="panel">
+    <h2>📦 My Collection <span id="collection-count">(0 / 20)</span></h2>
+    <div id="collection-grid"></div>
+  </section>
+
+  <!-- ===== BOTTOM: HISTORY + LEADERBOARD ===== -->
+  <div class="bottom-panels">
+    <section id="history-section" class="panel">
+      <h2>📜 Catch History</h2>
+      <div id="history-list" class="scroll-list">
+        <p class="empty-msg">No catches yet — cast your line!</p>
+      </div>
+    </section>
+
+    <section id="leaderboard-section" class="panel">
+      <h2>🏆 Leaderboard</h2>
+      <div id="leaderboard-list" class="scroll-list">
+        <p class="empty-msg">Loading…</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Load game logic as ES module -->
+  <script type="module" src="script.js"></script>
+</body>
+</html>
