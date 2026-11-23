@@ -324,8 +324,18 @@ function startMinigame(fish) {
   mg.reeling = false;
   mg.progress = 30; // start at 30%
 
-  // Read bar height from DOM
-  mg.barHeight = dom.mgBar.clientHeight;
+  // Set up the UI labels first
+  dom.mgFishEmoji.textContent = fish.emoji;
+  dom.mgFishName.textContent = fish.name;
+  dom.mgRarityBadge.textContent = fish.rarity;
+  dom.mgRarityBadge.className = fish.rarity;
+  dom.mgFishIcon.textContent = fish.emoji;
+
+  // Show overlay BEFORE reading dimensions — hidden elements have 0 height!
+  dom.mgOverlay.classList.remove("hidden");
+
+  // Now read bar height (forces browser to recalculate layout)
+  mg.barHeight = dom.mgBar.clientHeight || 360; // fallback to 360px
 
   // Set catch zone size based on difficulty
   const diff = DIFFICULTY[fish.rarity];
@@ -337,18 +347,8 @@ function startMinigame(fish) {
   mg.fishY = Math.random() * (mg.barHeight - mg.fishSize);
   mg.fishTarget = Math.random() * (mg.barHeight - mg.fishSize);
 
-  // Set up the UI
-  dom.mgFishEmoji.textContent = fish.emoji;
-  dom.mgFishName.textContent = fish.name;
-  dom.mgRarityBadge.textContent = fish.rarity;
-  dom.mgRarityBadge.className = fish.rarity;
-  dom.mgFishIcon.textContent = fish.emoji;
-
-  // Set catch zone height
+  // Set catch zone height in CSS
   dom.mgCatchZone.style.height = mg.zoneHeight + "px";
-
-  // Show overlay
-  dom.mgOverlay.classList.remove("hidden");
 
   // Start game loop
   mg.lastTime = performance.now();
