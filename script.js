@@ -486,15 +486,7 @@ async function endMinigame(success) {
   resetCastButton();
 }
 
-// --- Minigame input handlers ---
-function startReeling(e) {
-  e.preventDefault();
-  mg.reeling = true;
-}
-function stopReeling(e) {
-  e.preventDefault();
-  mg.reeling = false;
-}
+// (Reel input is handled via spacebar keydown/keyup on document — see bottom of file)
 
 // =============================================
 // 🖥️ REVEAL / GOTAWAY OVERLAYS
@@ -615,13 +607,19 @@ dom.switchBtn.addEventListener("click", loginPlayer);
 // Leaderboard refresh
 dom.lbRefresh.addEventListener("click", renderLeaderboard);
 
-// Minigame reel input — mouse + touch on the WHOLE overlay so you can click anywhere
-dom.mgOverlay.addEventListener("mousedown", startReeling);
-dom.mgOverlay.addEventListener("mouseup", stopReeling);
-dom.mgOverlay.addEventListener("mouseleave", stopReeling);
-dom.mgOverlay.addEventListener("touchstart", startReeling, { passive: false });
-dom.mgOverlay.addEventListener("touchend", stopReeling, { passive: false });
-dom.mgOverlay.addEventListener("touchcancel", stopReeling);
+// Minigame reel input — hold SPACEBAR to reel up
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space" && mg.active && !e.repeat) {
+    e.preventDefault();
+    mg.reeling = true;
+  }
+});
+document.addEventListener("keyup", (e) => {
+  if (e.code === "Space") {
+    e.preventDefault();
+    mg.reeling = false;
+  }
+});
 
 // =============================================
 // 🚀 INIT
